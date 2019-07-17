@@ -8,6 +8,13 @@ public class MutableWeightedEdgeDetails implements WeightedEdgeDetails {
 
     private int weight;
 
+    public MutableWeightedEdgeDetails() {
+    }
+
+    public MutableWeightedEdgeDetails(int weight) {
+        this.weight = weight;
+    }
+
     @Override
     public int getWeight() {
         return weight;
