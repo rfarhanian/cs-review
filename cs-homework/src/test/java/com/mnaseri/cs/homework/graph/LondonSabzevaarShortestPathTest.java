@@ -1,16 +1,18 @@
 package com.mnaseri.cs.homework.graph;
 
-import com.mmnaseri.cs.clrs.ch22.s1.AdjacencyMatrixGraph;
 import com.mmnaseri.cs.clrs.ch22.s1.Graph;
 import com.mmnaseri.cs.clrs.ch22.s1.SimpleVertexDetails;
 import com.mmnaseri.cs.clrs.ch22.s1.Vertex;
 import com.mmnaseri.cs.clrs.ch23.s1.MutableWeightedEdgeDetails;
 import com.mmnaseri.cs.clrs.ch24.s3.DijkstraSingleSourceShortestPathFinder;
+import com.mnaseri.cs.homework.graph.util.GraphDataStore;
 import org.junit.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Please create the following cities in your graph:
@@ -31,37 +33,19 @@ import java.util.*;
  * Find the cheapest flight between London and Sabezevaar.
  */
 public class LondonSabzevaarShortestPathTest {
-    //private List<String> cities = Arrays.asList("--0---", "--1--", "--2---", "----3----", "---4----", "--5-");
-    private List<String> cities = Arrays.asList("London", "Paris", "Tehran", "Asalooyeh", "Sabzevaar", "Kish");
-    private Map<String, Vertex<SimpleVertexDetails>> citiesMap = new HashMap<>();
+
+    private GraphDataStore dataStore = new GraphDataStore();
     private Graph<MutableWeightedEdgeDetails, SimpleVertexDetails> graph;
 
     @BeforeMethod
     public void setUp() {
-        graph = new AdjacencyMatrixGraph<>();
-
-        for (String cityName : cities) {
-            int vertexId = graph.add();
-            Vertex<SimpleVertexDetails> vertex = graph.get(vertexId);
-            vertex.setProperty("city", cityName);
-            citiesMap.put(cityName, vertex);
-        }
-
-        graph.connect(location("London"), location("Paris")).setDetails(new MutableWeightedEdgeDetails(250));
-        graph.connect(location("London"), location("Tehran")).setDetails(new MutableWeightedEdgeDetails(600));
-        graph.connect(location("Paris"), location("Tehran")).setDetails(new MutableWeightedEdgeDetails(550));
-        graph.connect(location("Paris"), location("Asalooyeh")).setDetails(new MutableWeightedEdgeDetails(100));
-        graph.connect(location("Tehran"), location("Sabzevaar")).setDetails(new MutableWeightedEdgeDetails(20));
-        graph.connect(location("Asalooyeh"), location("Tehran")).setDetails(new MutableWeightedEdgeDetails(15));
-        graph.connect(location("Asalooyeh"), location("Kish")).setDetails(new MutableWeightedEdgeDetails(99));
-        graph.connect(location("Kish"), location("Tehran")).setDetails(new MutableWeightedEdgeDetails(90));
-        graph.connect(location("London"), location("Kish")).setDetails(new MutableWeightedEdgeDetails(1000));
+        graph = dataStore.londonSabzevarGraph();
     }
 
     @Test
     public void testGraph() {
         DijkstraSingleSourceShortestPathFinder<MutableWeightedEdgeDetails, SimpleVertexDetails> pathFinder = new DijkstraSingleSourceShortestPathFinder<MutableWeightedEdgeDetails, SimpleVertexDetails>();
-        Graph<MutableWeightedEdgeDetails, SimpleVertexDetails> path = pathFinder.find(graph, location("London"));
+        Graph<MutableWeightedEdgeDetails, SimpleVertexDetails> path = pathFinder.find(graph, dataStore.location("London"));
         DijkstraSingleSourceShortestPathFinder<MutableWeightedEdgeDetails, SimpleVertexDetails> dijkstra = new DijkstraSingleSourceShortestPathFinder<>();
         Graph<MutableWeightedEdgeDetails, SimpleVertexDetails> graph = dijkstra.find(path, 0);
         final LinkedList<String> shortestPath = new LinkedList<>();
@@ -72,7 +56,7 @@ public class LondonSabzevaarShortestPathTest {
     }
 
     private List<String> buildComputedShortestPath(Graph<MutableWeightedEdgeDetails, SimpleVertexDetails> graph, LinkedList<String> shortestPath) {
-        Vertex<SimpleVertexDetails> vertex = graph.get(location("Sabzevaar"));
+        Vertex<SimpleVertexDetails> vertex = graph.get(dataStore.location("Sabzevaar"));
         Assert.assertNotNull(vertex);
         Vertex<SimpleVertexDetails> current = vertex;
         while (current != null) {
@@ -83,9 +67,5 @@ public class LondonSabzevaarShortestPathTest {
         }
 
         return Arrays.asList("London", "Paris", "Asalooyeh", "Tehran", "Sabzevaar");
-    }
-
-    private int location(String location) {
-        return citiesMap.get(location).getIndex();
     }
 }
