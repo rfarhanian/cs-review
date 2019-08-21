@@ -2,6 +2,7 @@ package com.mnaseri.cs.homework.graph;
 
 import com.mmnaseri.cs.clrs.ch22.s1.*;
 import com.mnaseri.cs.homework.graph.util.GraphDataStore;
+import org.junit.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,9 @@ public class LondonSabzevaarAllPathTest {
     public void verifyAllExistingPath() {
         Vertex<? extends VertexDetails> source = graph.get(dataStore.location("London"));
         Vertex<? extends VertexDetails> destination = graph.get(dataStore.location("Sabzevaar"));
-        List<String> solution = londonSabzevarAllPath.dfs(source, destination);
+        List<List<String>> solution = londonSabzevarAllPath.dfs(source, destination);
+        Assert.assertNotNull(solution);
+        Assert.assertEquals(5, solution.size());
         System.out.println("solution = " + solution);
 
     }
