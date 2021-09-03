@@ -15,10 +15,10 @@ public class RecursiveMaximumSubArrayFinder implements MaximumSubArrayFinder {
             return new SubArray(from, from, target[from]);
         }
         int sum = 0;
-        int leftSum = 0;
+        int leftSum = Integer.MIN_VALUE;
         int left = mid;
         int right = mid;
-        int rightSum = 0;
+        int rightSum = Integer.MIN_VALUE;
         for (int i = mid; i >= from; i --) {
             sum += target[i];
             if (sum > leftSum) {
@@ -27,7 +27,7 @@ public class RecursiveMaximumSubArrayFinder implements MaximumSubArrayFinder {
             }
         }
         sum = 0;
-        for (int i = mid + 1; i < to; i ++) {
+        for (int i = mid + 1; i <= to; i++) {
             sum += target[i];
             if (sum > rightSum) {
                 rightSum = sum;
@@ -42,23 +42,17 @@ public class RecursiveMaximumSubArrayFinder implements MaximumSubArrayFinder {
         if (target.length == 0) {
             return null;
         }
-        return find(0, target.length, target);
+        return find(0, target.length - 1, target);
     }
 
     public SubArray find(int from, int to, int... target) {
-        if (from >= to) {
-            if (to == target.length) {
-                return new SubArray(to, to, Integer.MIN_VALUE);
-            }
+        if (from == to) {
             return new SubArray(from, from, target[from]);
         }
         int mid = from + (to - from) / 2;
         final SubArray middle = findAcrossMiddle(from, to, mid, target);
         final SubArray leftSubArray = find(from, mid, target);
         final SubArray rightSubArray = find(mid + 1, to, target);
-        if (leftSubArray.isEmpty() && rightSubArray.isEmpty() && middle.isEmpty()) {
-            return new SubArray(0, 0, target[0]);
-        }
         if (leftSubArray.getSum() >= rightSubArray.getSum() && leftSubArray.getSum() >= middle.getSum()) {
             return leftSubArray;
         } else if (rightSubArray.getSum() >= middle.getSum()) {

@@ -4,6 +4,7 @@ import com.mmnaseri.cs.clrs.common.Sorter;
 import com.mmnaseri.cs.qa.annotation.Quality;
 import com.mmnaseri.cs.qa.annotation.Stage;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -37,9 +38,7 @@ public class CountingSorter implements Sorter<Integer> {
         //as we require the items in the original array as a reference
         final Integer[] target = new Integer[items.length];
         //initializing the counts
-        for (int i = 0; i < counts.length; i++) {
-            counts[i] = 0;
-        }
+        Arrays.fill(counts, 0);
         //counting the numbers, after this each item in count corresponds to how many of that item there was
         //in the original array
         for (Integer item : items) {

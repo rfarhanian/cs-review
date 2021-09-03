@@ -13,6 +13,15 @@ import com.mmnaseri.cs.qa.annotation.Stage;
 @Quality(value = Stage.UNTESTED)
 public class RecursiveMatrixChainParenthesizer implements MatrixChainParenthesizer {
 
+    public static void main(String[] args) {
+        int arr[] = new int[]{1, 2, 3, 4};
+        int n = arr.length;
+
+        RecursiveMatrixChainParenthesizer chainMatrixMultiplier = new RecursiveMatrixChainParenthesizer();
+        System.out.println("Minimum number of multiplications is :");
+        chainMatrixMultiplier.parenthesize(arr).print();
+    }
+
     @Override
     public MatrixParenthesization parenthesize(int... dimensions) {
         final int n = dimensions.length - 1;

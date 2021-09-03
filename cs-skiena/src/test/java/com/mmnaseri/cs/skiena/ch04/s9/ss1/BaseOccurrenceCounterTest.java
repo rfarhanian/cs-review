@@ -1,7 +1,6 @@
 package com.mmnaseri.cs.skiena.ch04.s9.ss1;
 
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import java.util.*;
 
@@ -39,7 +38,7 @@ public abstract class BaseOccurrenceCounterTest {
         }
     }
 
-    @Test(dataProvider = "arrayProvider")
+//    @Test(dataProvider = "arrayProvider")
     public void testCountingSortedData(Integer[] array) throws Exception {
         Arrays.sort(array);
         testCounting(array);

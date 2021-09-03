@@ -15,6 +15,39 @@ import java.util.List;
 @Quality(value = Stage.TESTED, explanation = "bad time complexity, but better than the brute force version")
 public class RecursiveEditDistanceCalculator implements EditDistanceCalculator {
 
+    public static void main(String[] args) {
+        RecursiveEditDistanceCalculator calculator = new RecursiveEditDistanceCalculator();
+        System.out.println("abc vs. abc = " + calculator.calculate("abc", "abc", new DefaultCostFunction()));
+        System.out.println("axcd vs. abc = " + calculator.calculate("axcd", "abc", new DefaultCostFunction()));
+        List<EditOperation> output = calculator.calculate("axcd", "abcgggg", new DefaultCostFunction());
+        System.out.println("axcd vs. abcgggg = " + output + ", cost: " + EditOperation.getTotalCost(output));
+        System.out.println("ad vs. abd = " + calculator.calculate("ad", "abd", new DefaultCostFunction()));
+        output = calculator.calculate("gdg", "aaxxx", new DefaultCostFunction());
+        System.out.println("gdg vs. aaxxx = " + output + ", cost: " + EditOperation.getTotalCost(output));
+    }
+
+    private static class DefaultCostFunction implements CostFunction {
+
+
+        @Override
+        public int getCost(EditOperationType operationType, String source, String target, int sourceIndex, int targetIndex) {
+            if (operationType == EditOperationType.COPY) {
+                return 0;
+            } else if (operationType == EditOperationType.INSERT) {
+                return 40;
+            } else if (operationType == EditOperationType.DELETE) {
+                return 40;
+            } else if (operationType == EditOperationType.TWIDDLE) {
+                return 10;
+            } else if (operationType == EditOperationType.REPLACE) {
+                return 30;
+            }
+            throw new IllegalArgumentException(operationType + " operationtype is not valid");
+        }
+
+    }
+
+
     @Override
     public List<EditOperation> calculate(String source, String target, CostFunction costFunction) {
         return calculate(source, target, source.length() - 1, target.length() - 1, costFunction);

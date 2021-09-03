@@ -39,9 +39,6 @@ public class RandomizedSelector<E extends Comparable<E>> implements Selector<E> 
     }
 
     private E select(int order, int from, int to, E[] items) {
-        if (from == to - 1) {
-            return items[from];
-        }
         final int partition = partition(items, from, to);
         if (order == partition) {
             return items[order];
