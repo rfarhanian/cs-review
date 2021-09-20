@@ -166,7 +166,7 @@ public class BinarySearchTree {
 
         if (root.getValue() == value) {
             return root;
-        } else if (root.getValue() < value) {
+        } else if (value > root.getValue()) {
             return find(root.getRight(), value);
         } else {
             return find(root.getLeft(), value);
@@ -175,7 +175,7 @@ public class BinarySearchTree {
 
     private void insert(Node root, int value) {
         root.incrementSize();
-        if (root.getValue() > value) {
+        if (value < root.getValue()) {
             if (root.getLeft() != null) {
                 insert(root.getLeft(), value);
             } else {
