@@ -59,7 +59,9 @@ public class Trie {
                 rest = !rest.isEmpty() ? rest.substring(1) : "";
             }
         }
-        current.clearWord();
+        if (rest.isEmpty()) {
+            current.clearWord();
+        }
     }
 
     public List<String> find(String text) {
