@@ -16,13 +16,13 @@ public class Trie {
         trie.insert("Raminaoxxd");
         trie.insert("Neda");
         trie.insert("Nedal");
-        List<String> ramin = trie.find("Ramin");
-        System.out.println("Ramin = " + ramin);
+        List<String> R = trie.find("Ramin");
+        System.out.println("Ramin = " + R);
         List<String> ned = trie.find("Ned");
         System.out.println("ned = " + ned);
         trie.delete("Ramin");
-        ramin = trie.find("Ramin");
-        System.out.println("Ramin = " + ramin);
+        trie.insert("RendezVous");
+        System.out.println("R = " + trie.find("R"));
     }
 
     public void insert(String text) {
