@@ -1,9 +1,10 @@
 package com.mnaseri.cs.homework.ctci.ch04;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
+/**
+ * https://www.youtube.com/watch?v=zIjfhVPRZCg
+ */
 public class Trie {
 
     private Node root = new Node();
@@ -16,26 +17,20 @@ public class Trie {
         trie.insert("Raminaoxxd");
         trie.insert("Neda");
         trie.insert("Nedal");
-        List<String> R = trie.find("Ramin");
-        System.out.println("Ramin = " + R);
-        List<String> ned = trie.find("Ned");
-        System.out.println("ned = " + ned);
+        trie.insert("Narineh");
+        System.out.println("find(Ramin) = " + trie.find("Ramin"));
+        System.out.println("find(Ned) = " + trie.find("Ned"));
         trie.delete("Ramin");
+        System.out.println("Ramin is deleted");
         trie.insert("RendezVous");
         System.out.println("R = " + trie.find("R"));
+        System.out.println("N = " + trie.find("N"));
+        System.out.println("Nar = " + trie.find("Nar"));
+        System.out.println("Ned = " + trie.find("Ned"));
     }
 
     public void insert(String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("text cannot be null.");
-        }
-        char[] chars = text.toCharArray();
-        Node current = root;
-
-        for (char c : chars) {
-            current = current.insert(c);
-        }
-        current.setAsWord();
+        root.insert(text);
     }
 
     public void delete(String text) {
@@ -45,33 +40,39 @@ public class Trie {
         if (find(root, text) == null) {
             return;
         }
-        Node current = root;
-        String rest = text.substring(1);
-        Character first = text.charAt(0);
-        while (first != null) {
-            Node child = current.find(first);
-            if (child.canBeDeleted()) {
-                child.clearChildren();
-                break;
-            } else {
-                current = child;
-                first = !rest.isEmpty() ? rest.charAt(0) : null;
-                rest = !rest.isEmpty() ? rest.substring(1) : "";
-            }
-        }
-        if (rest.isEmpty()) {
-            current.clearWord();
-        }
+        delete(root, text);
     }
+
+    private Node delete(Node node, String text) {
+        if (text.isEmpty()) {
+            node.isCompleteWord = false;
+            return node;
+        }
+        String next = text.length() > 1 ? text.substring(1) : "";
+        char ch = text.charAt(0);
+        Node nextNode = node.find(ch);
+        Node deleteCandidate = delete(nextNode, next);
+        if (deleteCandidate.isOrphan()) {
+            node.children.remove(deleteCandidate.value);
+        }
+        return deleteCandidate;
+    }
+
 
     public List<String> find(String text) {
         if (text == null || text.isEmpty()) {
             return Collections.emptyList();
         }
         Node current = find(root, text);
-        System.out.println("current = " + current);
-        return current != null ? current.find(current, text) : Collections.emptyList();
-
+        if (current != null) {
+            List<String> result = new ArrayList<>();
+            if (current.isCompleteWord) {
+                result.add(text);
+            }
+            result.addAll(current.find(current, text));
+            return result;
+        }
+        return Collections.emptyList();
     }
 
     private Node find(Node node, String text) {
@@ -89,8 +90,9 @@ public class Trie {
 
 
     private static class Node {
-        private List<Node> children = new ArrayList<>();
+        private Map<Character, Node> children = new HashMap<>();
         private Character value;
+        private boolean isCompleteWord;
 
         public Node(Character value) {
             this.value = value;
@@ -101,88 +103,58 @@ public class Trie {
         }
 
         public void setAsWord() {
-            children.add(new TerminalNode());
+            isCompleteWord = true;
         }
 
-
-        public Node insert(Character c) {
-            Node n = find(c);
-            if (n != null) {
-                return n;
-            } else {
-                Node newNode = new Node(c);
-                children.add(newNode);
-                return newNode;
+        public void insert(String text) {
+            if (text == null || text.isEmpty()) {
+                throw new IllegalArgumentException("text cannot be null or empty");
             }
-        }
-
-        public boolean canBeDeleted() {
-            for (Node child : children) {
-                if (!(child instanceof TerminalNode)) {
-                    return false;
+            Node current = this;
+            char[] chars = text.toCharArray();
+            for (char c : chars) {
+                if (current.children.containsKey(c)) {
+                    current = current.children.get(c);
+                } else {
+                    Node newNode = new Node(c);
+                    current.children.put(c, newNode);
+                    current = newNode;
                 }
             }
-
-            return true;
-        }
-
-        public void clearChildren() {
-            children.clear();
+            current.setAsWord();
         }
 
         public Node find(Character value) {
-            if (value == null) {
-                for (Node child : children) {
-                    if (child instanceof TerminalNode) {
-                        return child;
-                    }
-                }
-            } else {
-                for (Node child : children) {
-                    if (child.value != null && value.equals(child.value)) {
-                        return child;
-                    }
+            for (Node child : children.values()) {
+                if (value.equals(child.value)) {
+                    return child;
                 }
             }
             return null;
         }
 
         public List<String> find(Node node, String prefix) {
-            List<Node> allChildren = node.children;
+            Collection<Node> allChildren = node.children.values();
             List<String> result = new ArrayList<>();
             for (Node child : allChildren) {
-                if (child instanceof TerminalNode) {
-                    result.add(prefix);
-                } else {
-                    List<String> output = find(child, prefix + child.value);
-                    result.addAll(output);
+                if (child.isCompleteWord) {
+                    result.add(prefix + child.value);
                 }
+                List<String> output = find(child, prefix + child.value);
+                result.addAll(output);
             }
             return result;
+        }
+
+        public boolean isOrphan() {
+            return this.children.size() == 0 && !this.isCompleteWord;
         }
 
         public String toString() {
             return String.valueOf(this.value);
         }
 
-        public void clearWord() {
-            Node completeWord = null;
-            for (Node item : children) {
-                if (item instanceof TerminalNode) {
-                    completeWord = item;
-                }
-            }
-            children.remove(completeWord);
-        }
     }
 
-    private static class TerminalNode extends Node {
-        public TerminalNode() {
-        }
 
-        @Override
-        public String toString() {
-            return "[x]";
-        }
-    }
 }
