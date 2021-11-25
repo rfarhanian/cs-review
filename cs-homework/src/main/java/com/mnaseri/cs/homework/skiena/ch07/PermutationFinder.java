@@ -9,6 +9,8 @@ public class PermutationFinder {
         PermutationFinder finder = new PermutationFinder();
         List<String> result = finder.find("abc");
         System.out.println("result = " + result);
+        result = finder.find("1234");
+        System.out.println("1234 = " + result);
     }
 
     public List<String> find(String text) {

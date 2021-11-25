@@ -35,29 +35,34 @@ public class StronglyConnectedComponentFinder<E extends EdgeDetails, V extends V
         final Graph<E, V> coloredTransposed = second.visit(transposed, new GraphVertexVisitorAdapter<E, V>() {
         });
         //create a disjoint set where each set is represented by a root of the DFS tree and contains all its internal nodes
-        final PathCompressingRankedForestDisjointSet<Vertex<V>> set = new PathCompressingRankedForestDisjointSet<>();
+        final PathCompressingRankedForestDisjointSet<Vertex<V>> disjointSet = new PathCompressingRankedForestDisjointSet<>();
         for (Vertex<V> vertex : coloredTransposed.getVertices()) {
-            final RankedTreeElement<Vertex<V>> element = set.create(vertex);
+            final RankedTreeElement<Vertex<V>> element = disjointSet.create(vertex);
             final Vertex<V> root = findRoot(vertex);
             if (root.getIndex() == vertex.getIndex()) {
                 continue;
             }
-            RankedTreeElement<Vertex<V>> rootElement = null;
-            for (RankedTreeElement<Vertex<V>> treeElement : set.sets()) {
-                final Set<Vertex<V>> elements = set.elements(treeElement);
-                if (elements.contains(root)) {
-                    rootElement = treeElement;
-                    break;
-                }
-            }
+            RankedTreeElement<Vertex<V>> rootElement = findRootInDisjointSet(disjointSet, root);
             if (rootElement == null) {
-                rootElement = set.create(root);
+                rootElement = disjointSet.create(root);
             }
-            set.union(rootElement, element);
+            disjointSet.union(rootElement, element);
         }
-        return set;
+        return disjointSet;
     }
-    
+
+    private RankedTreeElement<Vertex<V>> findRootInDisjointSet(PathCompressingRankedForestDisjointSet<Vertex<V>> disjointSet, Vertex<V> root) {
+        RankedTreeElement<Vertex<V>> rootElement = null;
+        for (RankedTreeElement<Vertex<V>> treeElement : disjointSet.sets()) {
+            final Set<Vertex<V>> elements = disjointSet.elements(treeElement);
+            if (elements.contains(root)) {
+                rootElement = treeElement;
+                break;
+            }
+        }
+        return rootElement;
+    }
+
     private Vertex<V> findRoot(Vertex<V> vertex) {
         while (true) {
             final Vertex<V> parent = vertex.getProperty("parent", new ParameterizedTypeReference<Vertex<V>>() {

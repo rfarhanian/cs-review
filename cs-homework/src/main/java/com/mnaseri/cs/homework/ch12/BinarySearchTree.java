@@ -245,10 +245,10 @@ public class BinarySearchTree {
     }
 
     private Node min(Node root) {
-        if (root.getLeft() != null)
-            return min(root.getLeft());
-        else
-            return root;
+        if (root == null) {
+            return null;
+        }
+        return root.getLeft() != null ? min(root.getLeft()) : root;
     }
 
     /**

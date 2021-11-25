@@ -1,6 +1,7 @@
 package com.mmnaseri.cs.clrs.ch23.s2;
 
 import com.mmnaseri.cs.clrs.ch22.s1.*;
+import com.mmnaseri.cs.clrs.ch23.s1.MutableWeightedEdgeDetails;
 import com.mmnaseri.cs.clrs.ch23.s1.WeightedEdgeDetails;
 import com.mmnaseri.cs.clrs.common.HeapProperty;
 
@@ -11,6 +12,54 @@ import java.util.*;
  * @since 1.0 (8/5/15)
  */
 public class PrimMinimumSpanningTreeFinder<E extends WeightedEdgeDetails, V extends VertexDetails> implements MinimumSpanningTreeFinder<E, V> {
+
+    public static void main(String[] args) {
+        final Graph<WeightedEdgeDetails, VertexDetails> graph = new AdjacencyListGraph<>();
+        Map<String, Integer> map = new HashMap<>();
+        map.put("a", 0);
+        map.put("b", 1);
+        map.put("c", 2);
+        map.put("d", 3);
+        map.put("e", 4);
+        map.put("f", 5);
+        map.put("g", 6);
+        map.put("h", 7);
+        map.put("i", 8);
+        for (int i = 0; i < 9; i++) {
+            graph.add();
+        }
+        bidiConnect(graph, value(map, "a"), value(map, "b"), 4);
+        bidiConnect(graph, value(map, "a"), value(map, "h"), 8);
+        bidiConnect(graph, value(map, "b"), value(map, "c"), 8);
+        bidiConnect(graph, value(map, "i"), value(map, "h"), 7);
+        bidiConnect(graph, value(map, "i"), value(map, "c"), 2);
+        bidiConnect(graph, value(map, "i"), value(map, "g"), 6);
+        bidiConnect(graph, value(map, "g"), value(map, "f"), 2);
+        bidiConnect(graph, value(map, "c"), value(map, "f"), 4);
+        bidiConnect(graph, value(map, "c"), value(map, "d"), 7);
+        bidiConnect(graph, value(map, "d"), value(map, "e"), 9);
+        bidiConnect(graph, value(map, "d"), value(map, "f"), 4);
+        bidiConnect(graph, value(map, "f"), value(map, "e"), 0);
+        PrimMinimumSpanningTreeFinder<WeightedEdgeDetails, VertexDetails> mstFinder = new PrimMinimumSpanningTreeFinder<>();
+        Graph mst = mstFinder.find(graph);
+        System.out.println("mst = " + mst);
+    }
+
+    private static void bidiConnect(Graph<WeightedEdgeDetails, VertexDetails> graph, int from, int to, int weight) {
+        final WeightedEdgeDetails edgeDetails = weight(weight);
+        graph.connect(from, to, edgeDetails);
+        graph.connect(to, from, edgeDetails);
+    }
+
+    private static WeightedEdgeDetails weight(int weight) {
+        final MutableWeightedEdgeDetails details = new MutableWeightedEdgeDetails();
+        details.setWeight(weight);
+        return details;
+    }
+
+    private static Integer value(Map<String, Integer> map, String value) {
+        return map.get(value);
+    }
 
     @Override
     public Graph<E, V> find(Graph<E, V> graph) {
@@ -38,6 +87,8 @@ public class PrimMinimumSpanningTreeFinder<E extends WeightedEdgeDetails, V exte
                     final int edgeWeight = weight(graph, vertex, neighbor.getIndex());
                     if (edgeWeight < weights.get(neighbor.getIndex())) {
                         weights.put(neighbor.getIndex(), edgeWeight);
+                        heap.remove(neighbor.getIndex());//priority queue does not support decreaseKey operation. remove and add will do.
+                        heap.add(neighbor.getIndex());
                         parents.put(neighbor.getIndex(), vertex);
                     }
                 }
