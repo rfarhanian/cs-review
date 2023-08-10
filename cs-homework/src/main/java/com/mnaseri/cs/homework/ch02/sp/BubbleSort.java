@@ -16,7 +16,7 @@ public class BubbleSort {
     public static void sort(int[] input) {
         boolean isSorted = false;
         int lsi = input.length - 1;
-        while (!isSorted) {
+        while (!isSorted) {  //very unintuitive, CLRS implementation is much better than sedwick's.
             isSorted = true;
             for (int i = 0; i < lsi; i++) {
                 if (input[i] > input[i + 1]) {

@@ -22,7 +22,7 @@ public class MergeSort {
     }
 
     public static void sort(int[] a) {
-        int[] aux = new int[a.length];
+        int[] aux = new int[a.length]; //aux is essential for merge operation but it is only needed to copied from a when you are merging.
         sort(a, aux, 0, a.length - 1);
     }
 
@@ -38,17 +38,18 @@ public class MergeSort {
 
     private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
         int li = lo;
-        int ri = mid + 1;
-//        System.arraycopy(a, lo, aux, lo, (hi - lo));
+        int ri = mid + 1; // right index is the index after mid
+//        System.arraycopy(a, lo, aux, lo, (hi - lo + 1));
         for (int k = lo; k <= hi; k++) {
             aux[k] = a[k];
         }
+
         //aux is the source of truth
         for (int k = lo; k <= hi; k++) {
-            if (li > mid) {
+            if (li > mid) { //exhaustion condition on the left side
                 a[k] = aux[ri];
                 ri++;
-            } else if (ri > hi) {
+            } else if (ri > hi) {  //exhaustion condition on the right side
                 a[k] = aux[li];
                 li++;
             } else if (aux[li] < aux[ri]) {

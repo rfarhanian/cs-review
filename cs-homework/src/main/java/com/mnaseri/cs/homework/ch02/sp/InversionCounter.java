@@ -79,8 +79,9 @@ public class InversionCounter {
                 break;
             }
 
-            if (!counted && aux[li] > aux[ri]) {
-                count += (mid + 1) - li;
+            if (!counted && aux[li] > aux[ri]) { //when an item in the left array is bigger than the current item in the right array, it is an inversion
+                int leftLength = mid + 1;
+                count += leftLength - li;
                 counted = true;
             }
 

@@ -57,7 +57,7 @@ public class BinarySearchTree {
         for (int item : items) {
             System.out.println("bst.isBst(" + item + ") = " + bst.isBst(bst.find(item)));
         }
-        System.out.println("bst.ceiling(80) = " + bst.ceiling(81));
+        System.out.println("bst.ceiling(81) = " + bst.ceiling(81));
         System.out.println("bst.ceiling(92) = " + bst.ceiling(92));
         System.out.println("bst.ceiling(101) = " + bst.ceiling(101));
         System.out.println("bst.floor(92) = " + bst.floor(92));
@@ -68,7 +68,11 @@ public class BinarySearchTree {
     }
 
     /**
-     * Returns the largest key in the symbol table smaller than or equal to value
+     * Returns the largest key in the symbol table smaller than or equal to value.
+     * Remember that you are looking for the largest, so as part of your In order Walk,
+     * you check larger scenario first (root.value >value) and then you will reach a node
+     * that may have the answer on the left side(because you are looking for a key smaller or equal).
+     * If there is an answer on the left side, it will be returned otherwise root is the answer.
      *
      * @param value
      */
@@ -83,8 +87,10 @@ public class BinarySearchTree {
         if (root == null) {
             return null;
         }
-        int current = root.getValue();
-        if (current > value) {
+        if (root.getValue() == value) {
+            return root;
+        }
+        if (root.getValue() > value) {
             return floor(root.getLeft(), value);
         } else {
             Node right = floor(root.getRight(), value);
@@ -94,6 +100,10 @@ public class BinarySearchTree {
 
     /**
      * Returns the smallest key in the symbol table greater than or equal to value
+     * Remember that you are looking for the smallest key, so as part of your In order Walk,
+     * you check smaller scenario first (root.value < value) and then you will reach a node
+     * that may have the answer on the right side(because you are looking for a key greater or equal).
+     * If there is an answer on the right side, it will be returned otherwise root is the answer.
      *
      * @param value
      */
@@ -295,17 +305,22 @@ public class BinarySearchTree {
 
     private int rank(Node node, int targetValue) {
         if (node == null) {
-            return 0;
+            return -1;
         }
 
-        if (node.getValue() == targetValue) {
+        if (targetValue == node.getValue()) {
             return (node.getLeft() == null ? 0 : node.getLeft().getSize()) + 1;
-        } else if (node.getValue() > targetValue) {
+        } else if (targetValue < node.getValue()) {
             return rank(node.getLeft(), targetValue);
         } else {
-            return 1 + (node.getLeft() == null ? 0 : node.getLeft().getSize()) + rank(node.getRight(), targetValue);
+            int rightRank = rank(node.getRight(), targetValue);
+            if (rightRank == -1) {
+                return -1;
+            } else {
+                int leftSize = node.getLeft() == null ? 0 : node.getLeft().getSize();
+                return leftSize + 1 + rightRank;
+            }
         }
-
     }
 
     public int height(int value) {

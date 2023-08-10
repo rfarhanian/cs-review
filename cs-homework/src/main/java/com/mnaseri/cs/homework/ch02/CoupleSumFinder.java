@@ -18,7 +18,7 @@ public class CoupleSumFinder {
     public static Couple find(int[] h, int n) {
         int i = 0;
         int j = h.length - 1;
-        while (j < h.length && j > i) {
+        while (j > i) {
             int sum = h[i] + h[j];
             if (sum == n) {
                 return new Couple(h[i], h[j]);
