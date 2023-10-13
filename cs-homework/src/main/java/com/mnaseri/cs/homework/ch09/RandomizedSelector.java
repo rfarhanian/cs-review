@@ -5,8 +5,9 @@ import com.mmnaseri.cs.clrs.ch09.Selector;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 
-public class MyLinearSelector<E extends Comparable<E>> implements Selector<E> {
+public class RandomizedSelector<E extends Comparable<E>> implements Selector<E> {
 
     public static final Comparator<Integer> NATURAL_ORDER = new Comparator<Integer>() {
         @Override
@@ -14,14 +15,15 @@ public class MyLinearSelector<E extends Comparable<E>> implements Selector<E> {
             return first.compareTo(second);
         }
     };
+    private static final Random RANDOM = new Random();
     private final Comparator<E> comparator;
 
-    public MyLinearSelector(Comparator<E> comparator) {
+    public RandomizedSelector(Comparator<E> comparator) {
         this.comparator = comparator;
     }
 
     public static void main(String[] args) {
-        MyLinearSelector<Integer> linearSelector = new MyLinearSelector<Integer>(NATURAL_ORDER);
+        RandomizedSelector<Integer> linearSelector = new RandomizedSelector<Integer>(NATURAL_ORDER);
         Object[][] data = new Object[][]{
                 new Object[]{new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 6, 7},
                 new Object[]{new Integer[]{5, 4, 3, 2, 1, 0, -1, -2, -3, -4}, 3, -1},
@@ -71,10 +73,10 @@ public class MyLinearSelector<E extends Comparable<E>> implements Selector<E> {
     }
 
     private int partition(E[] input, int from, int to) {
-        E p = input[to];
+        E p = choosePivot(input, from, to);
         int si = from - 1;
         for (int i = from; i < to; i++) {
-            if (comparator.compare(p, input[i]) > 0) {
+            if (comparator.compare(p, input[i]) > 0) { // p > input[i]
                 ++si;
                 swap(input, i, si);
             }
@@ -82,6 +84,15 @@ public class MyLinearSelector<E extends Comparable<E>> implements Selector<E> {
         si++;
         swap(input, to, si);
         return si;
+    }
+
+    private E choosePivot(E[] input, int from, int to) {
+        if (to > from) {
+            int random = RANDOM.nextInt(to - from) + from;
+            swap(input, random, to);
+        }
+        return input[to];
+
     }
 
     private void swap(E[] s, int a, int b) {

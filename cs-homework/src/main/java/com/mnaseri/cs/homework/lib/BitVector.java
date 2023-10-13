@@ -6,6 +6,33 @@ public class BitVector {
     private int length;
     private int[] vector;
 
+    public static void main(String[] args) {
+        int a = 0;
+        int i = 22;
+        int mask = ~(1 << i);
+        System.out.println("mask = " + Integer.toBinaryString(mask));
+        int neutral = a & mask;
+        System.out.println("neutral = " + Integer.toBinaryString(neutral));
+        int i1 = 1 << i;
+        System.out.println("i1 = " + Integer.toBinaryString(i1));
+        a = neutral | i1;
+        System.out.println("a = " + Integer.toBinaryString(a));
+        System.out.println("get(a, i) = " + get(a, i));
+        System.out.println("get(a, i-1) = " + get(a, i - 1));
+
+
+//        BitVector bitVector = new BitVector(69);
+//        bitVector.set(65, true);
+//        bitVector.set(64, true);
+//        boolean b = bitVector.get(65);
+//        System.out.println("b = " + b);
+    }
+
+    public static boolean get(int value, int digit) {
+        int bit = (1 << digit);
+        return (bit & value) != 0;
+    }
+
     public BitVector(int length) {
         this.length = length;
         if (length % DATA_SIZE == 0) {

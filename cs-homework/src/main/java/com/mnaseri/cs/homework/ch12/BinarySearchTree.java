@@ -3,6 +3,9 @@ package com.mnaseri.cs.homework.ch12;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @see <a href="https://algs4.cs.princeton.edu/32bst/BST.java.html">Sedgewick BST</a>
+ */
 public class BinarySearchTree {
     private Node root;
 
@@ -68,6 +71,8 @@ public class BinarySearchTree {
     }
 
     /**
+     * (while you are implementing find method) GO TO THE RIGHT, IF FOUND NOTHING, RETURN ROOT
+     * <p>
      * Returns the largest key in the symbol table smaller than or equal to value.
      * Remember that you are looking for the largest, so as part of your In order Walk,
      * you check larger scenario first (root.value >value) and then you will reach a node
@@ -87,10 +92,10 @@ public class BinarySearchTree {
         if (root == null) {
             return null;
         }
-        if (root.getValue() == value) {
+        if (value == root.getValue()) {
             return root;
         }
-        if (root.getValue() > value) {
+        if (value < root.getValue()) {
             return floor(root.getLeft(), value);
         } else {
             Node right = floor(root.getRight(), value);
@@ -99,6 +104,8 @@ public class BinarySearchTree {
     }
 
     /**
+     * (while implementing search method), GO TO THE LEFT, IF FOUND NOTHING, RETURN THE ROOT
+     *
      * Returns the smallest key in the symbol table greater than or equal to value
      * Remember that you are looking for the smallest key, so as part of your In order Walk,
      * you check smaller scenario first (root.value < value) and then you will reach a node
@@ -118,7 +125,7 @@ public class BinarySearchTree {
         if (root.getValue() == value) {
             return root;
         }
-        if (root.getValue() < value) {
+        if (value > root.getValue()) {
             return ceiling(root.getRight(), value);
         } else {
             Node left = ceiling(root.getLeft(), value);
@@ -213,7 +220,7 @@ public class BinarySearchTree {
         } else {
             Node parent = node.getParent();
             Node current = node;
-            while (parent != null && current == parent.getRight()) {
+            while (parent != null && current.equals(parent.getRight())) {
                 current = parent;
                 parent = parent.getParent();
             }
@@ -230,7 +237,7 @@ public class BinarySearchTree {
         } else {
             Node parent = node.getParent();
             Node current = node;
-            while (parent != null && current == parent.getLeft()) {
+            while (parent != null && current.equals(parent.getLeft())) {
                 current = parent;
                 parent = parent.getParent();
             }
@@ -255,9 +262,6 @@ public class BinarySearchTree {
     }
 
     private Node min(Node root) {
-        if (root == null) {
-            return null;
-        }
         return root.getLeft() != null ? min(root.getLeft()) : root;
     }
 
@@ -265,7 +269,7 @@ public class BinarySearchTree {
      * Return the node of a given {@code rank}.
      * This node has the property that there are {@code rank} nodes in
      * that are smaller. In other words, this node is the
-     * ({@code rank}+1)st smallest key in the BST.
+     * ({@code rank})st smallest key in the BST.
      *
      * @param rank the order statistic
      * @return the value with given {@code rank}

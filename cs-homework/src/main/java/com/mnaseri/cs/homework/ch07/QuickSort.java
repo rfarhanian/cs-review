@@ -2,24 +2,38 @@ package com.mnaseri.cs.homework.ch07;
 
 import java.util.Arrays;
 
+/**
+ * If the input contains elements that are all the same, the runtime of randomized quick-sort is O(n^2).
+ * Even the worst case scenario of RandomizedQuickSort is O(n^2).
+ * The expected average is O(nlogn)
+ */
 public class QuickSort {
 
     public static void main(String[] args) {
         Integer[] input = new Integer[]{5, 1, 8, 6, 2};
+        System.out.println("input : " + Arrays.toString(input));
         QuickSort.sort(input);
-        System.out.println("input = " + Arrays.toString(input));
+        System.out.println("output = " + Arrays.toString(input));
         input = new Integer[]{5, 1, 8, 6};
-        QuickSort.sort(input);
         System.out.println("input = " + Arrays.toString(input));
+        QuickSort.sort(input);
+        System.out.println("output = " + Arrays.toString(input));
         input = new Integer[]{};
-        QuickSort.sort(input);
         System.out.println("input = " + Arrays.toString(input));
+        QuickSort.sort(input);
+        System.out.println("output = " + Arrays.toString(input));
         input = new Integer[]{5};
-        QuickSort.sort(input);
         System.out.println("input = " + Arrays.toString(input));
+        QuickSort.sort(input);
+        System.out.println("output = " + Arrays.toString(input));
         input = new Integer[]{8, 5, 1, 8, 5, 6, 2, 1, 6};
-        QuickSort.sort(input);
         System.out.println("input = " + Arrays.toString(input));
+        QuickSort.sort(input);
+        System.out.println("output = " + Arrays.toString(input));
+        input = new Integer[]{50, 10, 40, 30, 20};
+        QuickSort.sort(input);
+        System.out.println("output = " + Arrays.toString(input));
+
     }
 
     public static void sort(Integer[] arr) {

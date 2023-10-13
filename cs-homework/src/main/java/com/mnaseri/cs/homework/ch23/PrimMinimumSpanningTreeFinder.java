@@ -1,5 +1,8 @@
 package com.mnaseri.cs.homework.ch23;
 
+//import com.mnaseri.cs.homework.ch22.AdjacencyListGraph;
+//import com.mnaseri.cs.homework.ch22.Graph;
+
 import com.mnaseri.cs.homework.ch22.AdjacencyListGraph;
 import com.mnaseri.cs.homework.ch22.Graph;
 
@@ -72,7 +75,7 @@ public class PrimMinimumSpanningTreeFinder {
                     Integer edgeWeight = graph.edge(current, neighbor);
                     if (edgeWeight < weights.get(neighbor)) {
                         weights.put(neighbor, edgeWeight);
-                        priorityQueue.remove(neighbor);
+                        priorityQueue.remove(neighbor); //priority queue does not support decreaseKey operation. remove and add will do.
                         priorityQueue.add(neighbor);
                         parents.put(neighbor, current);
                     }
@@ -117,10 +120,8 @@ public class PrimMinimumSpanningTreeFinder {
         }
 
         public int compare(Integer first, Integer second) {
-            Integer a = weights.get(first);
-            Integer b = weights.get(second);
-            int comparison = Integer.compare(a, b);
-            return comparison == 0 ? Integer.compare(a, b) : comparison;
+            int comparison = Integer.compare(weights.get(first), weights.get(second));
+            return comparison == 0 ? Integer.compare(first, second) : comparison;
         }
     }
 

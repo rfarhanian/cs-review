@@ -19,26 +19,33 @@ import java.util.PriorityQueue;
 public class DijkstraSingleSourceShortestPathFinder<E extends WeightedEdgeDetails, V extends VertexDetails> {
 
 
-    public Graph<E, V> find(Graph<E, V> graph, int start) {
+    private AdjacencyListGraph<E, V> initialize(Graph<E, V> graph, int start) {
         AdjacencyListGraph<E, V> result = new AdjacencyListGraph<>();
         List<Vertex<V>> vertices = graph.getVertices();
-        PriorityQueue<Vertex<V>> pq = new PriorityQueue<>(new Comparator<Vertex<V>>() {
-            public int compare(Vertex<V> first, Vertex<V> second) {
-                return Integer.compare((int) first.getProperty("distance"), (int) second.getProperty("distance"));
-            }
-        });
 
         for (Vertex<V> vertex : vertices) {
             result.add();
             Vertex<V> node = result.get(vertex.getIndex());
             node.setProperty("predecessor", null);
             node.setProperty("distance", Integer.MAX_VALUE);
-            pq.add(node);
         }
         for (Edge<E, V> edge : graph.getEdges()) {
             result.connect(edge.getFrom().getIndex(), edge.getTo().getIndex(), edge.getDetails());
         }
         result.get(start).setProperty("distance", 0);
+        return result;
+    }
+
+    public Graph<E, V> find(Graph<E, V> graph, int start) {
+        AdjacencyListGraph<E, V> result = initialize(graph, start);
+
+        PriorityQueue<Vertex<V>> pq = new PriorityQueue<>(new Comparator<Vertex<V>>() {
+            public int compare(Vertex<V> first, Vertex<V> second) {
+                return Integer.compare((int) first.getProperty("distance"), (int) second.getProperty("distance"));
+            }
+        });
+        pq.addAll(result.getVertices());
+
 
         while (!pq.isEmpty()) {
             Vertex<V> current = pq.poll();
@@ -61,7 +68,7 @@ public class DijkstraSingleSourceShortestPathFinder<E extends WeightedEdgeDetail
         if (startWeight + edgeWeight < neighborWeight) {
             neighbor.setProperty("distance", startWeight + edgeWeight);
             neighbor.setProperty("predecessor", current);
-            pq.remove(neighbor);
+            pq.remove(neighbor); //PriorityQueue implementation does not have a decrease-key method. So we have to remove and add the node to correctly reheapify the array.
             pq.add(neighbor);
         }
     }

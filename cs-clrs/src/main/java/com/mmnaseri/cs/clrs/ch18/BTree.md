@@ -2,12 +2,12 @@ BTree Implementation
 ====================
 
 The BTree data structure is a balanced search tree that has a branching factor between `t - 1` to
- `2t - 1` for each node. The constant `t` is called the BTree minimum degree.
- 
- The implementation provided here follows the one described by the book very closely. The only difference
- is that here the data is always contained under the leaves, which makes it more like a B+Tree. The difference
- between this implementation and a B+Tree is that here the leaves do not form a doubly linked list and as such
- getting the data is not as easy as it is with a B+Tree.
+`2t - 1` for each animal. The constant `t` is called the BTree minimum degree.
+
+The implementation provided here follows the one described by the book very closely. The only difference
+is that here the data is always contained under the leaves, which makes it more like a B+Tree. The difference
+between this implementation and a B+Tree is that here the leaves do not form a doubly linked list and as such
+getting the data is not as easy as it is with a B+Tree.
  
  In some ways, this makes this implementation superior to that of the book, in that it requires a much more
  flat disk storage to manage the data for this BTree. However, this means you cannot place more frequently

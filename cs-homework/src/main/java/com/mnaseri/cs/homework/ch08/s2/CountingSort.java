@@ -1,7 +1,12 @@
-package com.mnaseri.cs.homework.ch02;
+package com.mnaseri.cs.homework.ch08.s2;
+
+import com.mmnaseri.cs.qa.annotation.Complexity;
 
 import java.util.Arrays;
 
+/**
+ * @see <a href="https://www.baeldung.com/java-counting-sort">Positive Counting Sort</a>
+ */
 public class CountingSort {
 
     public static void main(String[] args) {
@@ -10,6 +15,7 @@ public class CountingSort {
         System.out.println(Arrays.toString(input));
     }
 
+    @Complexity(value = "O(k+ n)", explanation = "Stable algorithm")
     public static void sort(int[] input) {
         int offset = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
@@ -32,7 +38,7 @@ public class CountingSort {
         }
 
         int[] target = new int[input.length];
-        for (int i = input.length - 1; i >= 0; i--) {
+        for (int i = input.length - 1; i >= 0; i--) { // The order is reverse to retain the stability of the algorithm.
             int item = input[i];
             target[count_array[item - offset] - 1] = item;
             count_array[item - offset]--;

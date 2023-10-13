@@ -9,6 +9,15 @@ import java.util.Map;
  */
 public class CountingPalindromeAnagram implements PalindromeAnagram {
 
+
+    public static void main(String[] args) {
+        String s = "aaabbbb";
+        CountingPalindromeAnagram countingPalindromeAnagram = new CountingPalindromeAnagram();
+        System.out.println("palindromeAnagram = " + countingPalindromeAnagram.isPalindromeAnagram(s));
+        s = "a";
+        System.out.println("palindromeAnagram = " + countingPalindromeAnagram.isPalindromeAnagram(s));
+    }
+
     @Override
     public boolean isPalindromeAnagram(String text) {
         text = text.replaceAll(" +", "").toLowerCase();
@@ -18,7 +27,7 @@ public class CountingPalindromeAnagram implements PalindromeAnagram {
             final Character c = text.charAt(i);
             map.put(c, map.containsKey(c) ? map.get(c) + 1 : 1);
             if (map.get(c) % 2 == 1) {
-                odds ++;
+                odds++;
             } else {
                 odds --;
             }

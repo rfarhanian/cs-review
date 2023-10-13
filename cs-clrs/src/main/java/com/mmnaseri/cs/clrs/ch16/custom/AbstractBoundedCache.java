@@ -100,6 +100,7 @@ public abstract class AbstractBoundedCache<K, V> implements Cache<K, V> {
         }
 
         public V get() {
+            access();
             return value;
         }
 
@@ -115,8 +116,8 @@ public abstract class AbstractBoundedCache<K, V> implements Cache<K, V> {
             return creationTime;
         }
 
-        public void access() {
-            accessCount ++;
+        private void access() {
+            accessCount++;
             accessTime = new Date();
         }
 

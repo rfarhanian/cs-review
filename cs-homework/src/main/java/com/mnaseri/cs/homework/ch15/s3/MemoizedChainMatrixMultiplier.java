@@ -1,7 +1,10 @@
 package com.mnaseri.cs.homework.ch15.s3;
 
 /**
- * https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-21-dp-iii-parenthesization-edit-distance-knapsack/
+ * @see <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-21-dp-iii-parenthesization-edit-distance-knapsack/">
+ * The Chain Matrix Multiply Problem</a>
+ * @see <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/06fe52fd13d711cb32dd0e5c6c8f0980_MIT6_006F11_lec21_orig.pdf">
+ * Read Eric Demaine Notes</a>
  */
 public class MemoizedChainMatrixMultiplier {
 

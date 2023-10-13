@@ -1,10 +1,11 @@
 package com.mnaseri.cs.homework.ch06;
 
+import com.mmnaseri.cs.qa.annotation.Complexity;
+
 import java.util.Arrays;
 
 /**
- * Based on
- * <a href="Mergesort"></a>
+ * @see <a href="https://stackoverflow.com/questions/1517793/what-is-stability-in-sorting-algorithms-and-why-is-it-important">The impact of stability</a>
  */
 public class MergeSort {
 
@@ -21,6 +22,7 @@ public class MergeSort {
         System.out.println("Arrays.toString(numbers) = " + Arrays.toString(numbers));
     }
 
+    @Complexity(value = "O(n.lg(n))", explanation = "Stable algorithm")
     public static void sort(int[] a) {
         int[] aux = new int[a.length]; //aux is essential for merge operation but it is only needed to copied from a when you are merging.
         sort(a, aux, 0, a.length - 1);

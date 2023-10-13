@@ -6,8 +6,25 @@ package com.mmnaseri.cs.ctci.ch01.p05;
  */
 public class RecursiveOneAway implements OneAway {
 
+    public static void main(String[] args) {
+        RecursiveOneAway recursiveOneAway = new RecursiveOneAway();
+        System.out.println("recursiveOneAway.oneAway(\"xyz\", \"xy\") = " + recursiveOneAway.oneAway("xyz", "xy"));
+        System.out.println("recursiveOneAway.oneAway(\"xyz\", \"jz\") = " + recursiveOneAway.oneAway("xyz", "jz"));
+        System.out.println("recursiveOneAway.oneAway(\"pale\", \"pal\") = " + recursiveOneAway.oneAway("pale", "pal"));
+        System.out.println("recursiveOneAway.oneAway(\"pales\", \"pale\") = " + recursiveOneAway.oneAway("pales", "pale"));
+        System.out.println("recursiveOneAway.oneAway(\"pale\", \"bale\") = " + recursiveOneAway.oneAway("pale", "bale"));
+        System.out.println("recursiveOneAway.oneAway(\"pale\", \"bake\") = " + recursiveOneAway.oneAway("pale", "bake"));
+        System.out.println("recursiveOneAway.oneAway(\"\", \"\") = " + recursiveOneAway.oneAway("", ""));
+    }
+
     @Override
     public boolean oneAway(String first, String second) {
+        if (first == null || second == null) {
+            return false;
+        }
+        if (Math.abs(first.length() - second.length()) > 1) {
+            return false;
+        }
         return oneAway(first, second, false);
     }
 
@@ -15,7 +32,7 @@ public class RecursiveOneAway implements OneAway {
         if (first.isEmpty() && second.isEmpty()) {
             return true;
         }
-        if (first.isEmpty() && !second.isEmpty() || !first.isEmpty() && second.isEmpty()) {
+        if ((first.isEmpty() && !second.isEmpty()) || (!first.isEmpty() && second.isEmpty())) {
             return !edited;
         }
         if (first.charAt(0) == second.charAt(0)) {

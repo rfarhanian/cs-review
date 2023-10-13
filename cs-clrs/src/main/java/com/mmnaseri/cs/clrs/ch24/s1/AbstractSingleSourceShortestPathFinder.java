@@ -30,8 +30,7 @@ public abstract class AbstractSingleSourceShortestPathFinder<E extends WeightedE
         relax(edge);
     }
 
-    protected void
-    relax(Edge<E, V> edge) {
+    protected void relax(Edge<E, V> edge) {
         final Vertex<V> midpoint = edge.getFrom();
         final Vertex<V> destination = edge.getTo();
         final int edgeWeight = weight(edge);

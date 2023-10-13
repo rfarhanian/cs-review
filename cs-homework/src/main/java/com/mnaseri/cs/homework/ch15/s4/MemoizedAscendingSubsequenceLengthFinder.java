@@ -22,14 +22,13 @@ public class MemoizedAscendingSubsequenceLengthFinder {
             return 0;
         }
         int current = n.get(i);
-//        Pair key= new Pair(current, prev);
-//        if(cache.containsKey(key)){
-//            System.out.println("Cache Hit:"+ key);
-//            return cache.get(key);
-//        }
-//        else{
-//            System.out.println("Cache Miss:" + i);
-//        }
+        Pair key = new Pair(current, prev);
+        if (cache.containsKey(key)) {
+            System.out.println("Cache Hit:" + key);
+            return cache.get(key);
+        } else {
+            System.out.println("Cache Miss:" + i);
+        }
 
         int without = find(n, i + 1, prev, cache);
         int with = 0;
@@ -37,8 +36,8 @@ public class MemoizedAscendingSubsequenceLengthFinder {
             with = 1 + find(n, i + 1, current, cache);
         }
         int result = Math.max(with, without);
-//        cache.put(key, result);
-//        System.out.println("i:" + i + ",result = " + result);
+        cache.put(key, result);
+        System.out.println("i:" + i + ",result = " + result);
         return result;
     }
 

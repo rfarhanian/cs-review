@@ -2,7 +2,6 @@ package com.mnaseri.cs.homework.ch22;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class TopologicalSorter {
     public static void main(String[] args) {
@@ -23,7 +22,7 @@ public class TopologicalSorter {
 
     public List<Integer> sort(Graph graph) {
         DepthFirstSearch depthFirstSearch = new DepthFirstSearch(graph);
-        Stack<Integer> stack = new Stack<>();
+//        Stack<Integer> stack = new Stack<>();
         LinkedList<Integer> list = new LinkedList<>();
         depthFirstSearch.search(new GraphVisitor() {
             @Override

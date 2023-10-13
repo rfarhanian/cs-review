@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * https://www.techiedelight.com/longest-increasing-subsequence-using-dynamic-programming/
+ * @see <a href="https://www.techiedelight.com/longest-increasing-subsequence-using-dynamic-programming/">ascending subsequent finder</a>
  */
 public class BottomUpAscendingSubsequenceLengthFinder {
 
@@ -38,24 +38,5 @@ public class BottomUpAscendingSubsequenceLengthFinder {
             prev = current;
         }
         return cache.get(n.get(0));
-//        if (i >= n.size()) {
-//            return 0;
-//        }
-//        int current = n.get(i);
-//        if (cache.containsKey(current)) {
-//            System.out.println("Cache Hit:" + current);
-//            return cache.get(current);
-//        } else {
-//            System.out.println("Cache Miss:" + current);
-//        }
-//
-//        int without = find(n, i + 1, prev, cache);
-//        int with = 0;
-//        if (current > prev) {
-//            with = 1 + find(n, i + 1, current, cache);
-//        }
-//        int result = Math.max(with, without);
-//        cache.put(current, result);
-//        return result;
     }
 }

@@ -4,11 +4,22 @@ import java.util.*;
 
 /**
  * https://www.youtube.com/watch?v=5wFyZJ8yH9Q
+ * <p>
+ * The good thing about the transposed graph is that it can find the strongly connected component if you know where to start.
+ * Try the algorithm using three nodes (e.g. 0, 1, 2). Find out the dfs and transposed dfs result. Then the algorithm
+ * becomes intuitive.
  */
 public class StronglyConnectedComponentFinder {
 
     public static void main(String[] args) {
         AdjacencyListGraph graph = new AdjacencyListGraph(false);
+//        for (int i = 0; i < 3; i++) {
+//            graph.add(i);
+//        }
+//        graph.connect(0, 1);
+//        graph.connect(1, 2);
+//        graph.connect(2, 0);
+
         for (int i = 0; i < 9; i++) {
             graph.add(i);
         }
@@ -47,8 +58,8 @@ public class StronglyConnectedComponentFinder {
             Integer current = stack.pop();
             if (!visited.contains(current)) {
                 List<Integer> set = new ArrayList<>();
-                map.put(current, set);
                 dfs(tg, current, visited, set);
+                map.put(current, set);
             }
         }
         return map;

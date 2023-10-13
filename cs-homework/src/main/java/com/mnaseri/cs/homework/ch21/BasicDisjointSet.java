@@ -3,13 +3,17 @@ package com.mnaseri.cs.homework.ch21;
 
 import java.util.*;
 
+
+/**
+ * @see <a href="https://www.youtube.com/watch?v=tggclhtdUGg&list=PLu0nzW8Es1x3TmpwQRLMQwCtulEd43ZY8&index=31">Disjoint Set video Berkley by Yogesh Paul</a>
+ * @see <a href="https://www.youtube.com/watch?v=PGZ64ob440I">Yet another Disjoint Set video</a>
+ */
 public class BasicDisjointSet {
     private Map<UUID, LinkedList<Item>> map = new HashMap<>();
 
     public Item create(int value) {
         Item item = new Item(value);
-        UUID index = createUniqueUUID();
-        item.setUuid(index);
+        item.setUuid(createUniqueUUID());
         LinkedList<Item> items = new LinkedList<>();
         items.add(item);
         map.put(item.getUuid(), items);

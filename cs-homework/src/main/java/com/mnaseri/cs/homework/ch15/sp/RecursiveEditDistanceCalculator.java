@@ -3,6 +3,20 @@ package com.mnaseri.cs.homework.ch15.sp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @see <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/lecture-21-dp-iii-parenthesization-edit-distance-knapsack/">
+ * The edit distance problem</a>
+ * <p>
+ * Watch the video and when you understand the problem, complete the following sections:
+ * <p>
+ * 1- Subproblem:
+ * <p>
+ * 2-Recurrence:
+ * <p>
+ * 3-Total Solution
+ * <p>
+ * 4-Base case:
+ */
 public class RecursiveEditDistanceCalculator {
 
     public static void main(String[] args) {

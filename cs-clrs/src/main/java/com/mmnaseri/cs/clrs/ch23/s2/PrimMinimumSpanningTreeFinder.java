@@ -87,7 +87,7 @@ public class PrimMinimumSpanningTreeFinder<E extends WeightedEdgeDetails, V exte
                     final int edgeWeight = weight(graph, vertex, neighbor.getIndex());
                     if (edgeWeight < weights.get(neighbor.getIndex())) {
                         weights.put(neighbor.getIndex(), edgeWeight);
-                        heap.remove(neighbor.getIndex());//priority queue does not support decreaseKey operation. remove and add will do.
+                        heap.remove(neighbor.getIndex()); //priority queue does not support decreaseKey operation. remove and add will do.
                         heap.add(neighbor.getIndex());
                         parents.put(neighbor.getIndex(), vertex);
                     }

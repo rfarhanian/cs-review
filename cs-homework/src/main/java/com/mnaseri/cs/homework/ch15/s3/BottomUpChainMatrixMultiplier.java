@@ -20,9 +20,9 @@ public class BottomUpChainMatrixMultiplier {
         for (int i = 0; i < dimensions.length; i++) {
             cache.put(i, i, 0);
         }
-        for (int l = 2; l <= n; l++) {
-            for (int i = 1; i <= n - l + 1; i++) {
-                int j = i + l - 1;
+        for (int chainLength = 2; chainLength <= n; chainLength++) {
+            for (int i = 1; i <= n - chainLength + 1; i++) {
+                int j = i + chainLength - 1;
                 cache.put(i, j, Integer.MAX_VALUE);
                 for (int k = i; k < j; k++) {
                     int result = cache.get(i, k) + cache.get(k + 1, j) + dimensions[i - 1] * dimensions[k] * dimensions[j];

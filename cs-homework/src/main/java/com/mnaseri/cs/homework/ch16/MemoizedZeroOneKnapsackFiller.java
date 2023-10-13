@@ -6,7 +6,7 @@ package com.mnaseri.cs.homework.ch16;
  * Please remember that our implementation cannot be memoized. If you only return the max weight,
  * then it will become feasible.
  */
-class MemoizedZeroOneKnapsackFiller {
+public class MemoizedZeroOneKnapsackFiller {
 
     public static void main(String[] args) {
         int[] values = {60, 100, 120};

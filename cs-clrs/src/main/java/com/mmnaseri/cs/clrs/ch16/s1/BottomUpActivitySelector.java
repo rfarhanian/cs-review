@@ -80,7 +80,7 @@ public class BottomUpActivitySelector implements ActivitySelector {
         return best;
     }
 
-    @Complexity(value = "O(n^2)", explanation = "We are walking the hole matrix")
+    @Complexity(value = "O(n^2)", explanation = "We are walking the whole matrix")
     private int[][] prepareSelectionMatrix(IndexedActivity[] indexedActivities) {
         final int[][] selection = new int[indexedActivities.length][];
         for (int i = 0; i < indexedActivities.length; i ++) {

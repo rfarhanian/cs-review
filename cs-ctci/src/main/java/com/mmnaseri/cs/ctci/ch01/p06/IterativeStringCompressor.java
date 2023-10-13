@@ -6,6 +6,12 @@ package com.mmnaseri.cs.ctci.ch01.p06;
  */
 public class IterativeStringCompressor implements StringCompressor {
 
+    public static void main(String[] args) {
+        IterativeStringCompressor compressor = new IterativeStringCompressor();
+        System.out.println("compress(\"abc\") = " + compressor.compress("abc"));
+        System.out.println("compress(\"aabcccccaaa\") = " + compressor.compress("aabcccccaaa"));
+    }
+
     @Override
     public String compress(String original) {
         final StringBuilder builder = new StringBuilder();

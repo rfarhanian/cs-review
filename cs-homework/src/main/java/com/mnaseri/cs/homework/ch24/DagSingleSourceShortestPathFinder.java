@@ -7,6 +7,13 @@ import com.mmnaseri.cs.clrs.ch23.s1.WeightedEdgeDetails;
 
 import java.util.List;
 
+/**
+ * The assumption is that the graph is a "Directed Acyclic Graph" so there will be no negative cycles although you can have negative edges.
+ * Djikstra's assumption is that all nodes are non-negative.
+ *
+ * @param <E>
+ * @param <V>
+ */
 public class DagSingleSourceShortestPathFinder<E extends WeightedEdgeDetails, V extends VertexDetails> {
 
     public Graph<E, V> find(Graph<E, V> graph, int start) {
@@ -34,7 +41,8 @@ public class DagSingleSourceShortestPathFinder<E extends WeightedEdgeDetails, V 
                 Edge<E, V> edge = graph.edge(current.getIndex(), neighbor.getIndex());
                 int weight = weight(edge);
                 int suggestedDistance = weight + currentDistance;
-                if (neighbor.getProperty("distance", Integer.class) > suggestedDistance) {
+                Integer actualDistance = neighbor.getProperty("distance", Integer.class);
+                if (actualDistance > suggestedDistance) {
                     neighbor.setProperty("distance", suggestedDistance);
                     neighbor.setProperty("predecessor", current);
                 }

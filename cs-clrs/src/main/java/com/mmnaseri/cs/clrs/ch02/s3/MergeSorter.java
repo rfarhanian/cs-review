@@ -78,7 +78,7 @@ public class MergeSorter<E extends Comparable<E>> implements Sorter<E> {
      * @param from     the beginning of the target portion
      * @param to       the end of the target portion
      */
-    @Complexity("O(n.lg(n))")
+    @Complexity(value = "O(n.lg(n))", explanation = "Stable algorithm")
     protected void sort(E[] items, int from, int to) {
         if (to - from < 2) {
             return;

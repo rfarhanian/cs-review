@@ -22,7 +22,7 @@ public class SimpleRodCutter implements RodCutter {
             return 0;
         }
         Integer revenue = Integer.MIN_VALUE;
-        for (int i = 0; i < rodSize; i ++) {
+        for (int i = 1; i < rodSize; i++) {
             revenue = Math.max(revenue, function.getPrice(i) + cut(rodSize - i));
         }
         return revenue;

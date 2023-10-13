@@ -15,7 +15,7 @@ public class RecursiveActivitySelector implements ActivitySelector {
     private Set<Integer> select(int current, IndexedActivity... activities) {
         int cursor = current + 1;
         while (cursor < activities.length && activities[cursor].getStart() < activities[current].getFinish()) {
-            cursor ++;
+            cursor++;
         }
         if (cursor < activities.length) {
             final Set<Integer> rest = select(cursor, activities);
