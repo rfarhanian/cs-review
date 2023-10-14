@@ -43,7 +43,9 @@ public class Parens {
         Set<String> newSolutions = new HashSet<>();
         for (String current : result) {
             for (int j = 0; j < current.length(); j++) {
-                String candidate = current.substring(0, j + 1) + PARANTHESIS + current.substring(j + 1);
+                String currentVisitingChar = current.substring(0, j + 1);
+                String afterCurrentVisitingChar = current.substring(j + 1);
+                String candidate = currentVisitingChar + PARANTHESIS + afterCurrentVisitingChar;
 //                System.out.println("candidate = " + candidate);
                 newSolutions.add(candidate);
             }
