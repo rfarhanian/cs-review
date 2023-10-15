@@ -14,7 +14,7 @@ public class Coins {
 
     public static void main(String[] args) {
         Coins coins = new Coins();
-        for (int i = 1; i < 100; i++) {
+        for (int i = 1; i < 1000; i++) {
             System.out.println("coins.findPermutations(" + i + ") = " + coins.findPermutations(i));
         }
     }
@@ -35,7 +35,6 @@ public class Coins {
             COIN_TYPE nextCoin = type.getNext();
             totalWays += findPermutations(remainder, nextCoin);
         }
-
         return totalWays;
     }
 }

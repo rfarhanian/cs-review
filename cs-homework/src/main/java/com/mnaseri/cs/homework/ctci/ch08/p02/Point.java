@@ -1,4 +1,4 @@
-package com.mnaseri.cs.homework.ctci.ch08.p82;
+package com.mnaseri.cs.homework.ctci.ch08.p02;
 
 import java.util.Objects;
 
