@@ -50,9 +50,9 @@ public class NQueen {
             if (cannotBeAttacked(input, row, col)) {
 //                Boolean[][] newInput= copy(input, row); //You don't need a copy. You can backtrack just like what we did after the recursion (input[row][col] = null;)
 //                newInput[row][col] = true;
-                input[row][col] = true;
-                doFind(input, row + 1, solution);
-                input[row][col] = null;
+                input[row][col] = true; //make_move (Skienna page 232)
+                doFind(input, row + 1, solution); //backtrack (Skienna page 232)
+                input[row][col] = null; //unmake_move (Skienna page 232)
             }
         }
     }
