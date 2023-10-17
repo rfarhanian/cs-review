@@ -8,6 +8,7 @@ package com.mnaseri.cs.homework.ctci.ch08.p14;
  * The above can be defined as
  * (DP(left), whatYouExpect) operand (DP(right, whatYouExpect))
  * if operand is '&', then "whatYouExpect" has to be true to compute the positive ways.
+ * Check catalan number and (ctci page 371).
  */
 public class BooleanEvaluator {
 

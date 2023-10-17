@@ -45,8 +45,11 @@ public class KWayMergeSorter {
     private static void log(ListNode output) {
         ListNode current = output;
         while (current != null) {
-            System.out.println(current.val);
+            System.out.print(current.val);
             current = current.next;
+            if (current != null) {
+                System.out.print(",");
+            }
         }
     }
 
