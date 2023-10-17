@@ -6,9 +6,10 @@ import static com.mnaseri.cs.homework.ctci.ch08.p11.COIN_TYPE.QUARTER;
 
 /**
  * This is the most readable version of the Coins that I could implement.
- * Cracking the code interview code is highly unreadable.
+ * Cracking the code interview corresponding code is highly unreadable.
  * The following logic follows a DFS of zero or more items of each coin and
  * recursively chooses the next coin.
+ * If you can imagine the execution tree of the problem, you can implement it.
  */
 public class Coins {
 
