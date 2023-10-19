@@ -8,10 +8,12 @@ public class PhoneNumberPermutationFinder {
         Map<Character, List<Character>> map = new HashMap<>();
         map.put('1', Arrays.asList('a', 'b', 'c'));
         map.put('2', Arrays.asList('d', 'e', 'f'));
-        map.put('3', Arrays.asList('g'));
+        map.put('3', Arrays.asList('g', 'h', 'i'));
         PhoneNumberPermutationFinder finder = new PhoneNumberPermutationFinder();
-        List<String> output = finder.find("123", map);
-        System.out.println("output = " + output);
+        List<String> output;
+        System.out.println("output(1) = " + finder.find("1", map));
+        System.out.println("output(12) = " + finder.find("12", map));
+        System.out.println("output(123) = " + finder.find("123", map));
         // 2 -> d e f
         // 3 -> g
 
@@ -22,8 +24,9 @@ public class PhoneNumberPermutationFinder {
         map.put('1', Arrays.asList('a', 'b', 'c'));
         map.put('2', Arrays.asList('d', 'e', 'f'));
         map.put('3', Arrays.asList('g', 'h', 'i'));
-        output = finder.find("123", map);
-        System.out.println("another output = " + output);
+        map.put('4', Arrays.asList('j', 'k', 'l'));
+        output = finder.find("1234", map);
+        System.out.println("another(1234) = " + output);
     }
 
     public List<String> find(String number, Map<Character, List<Character>> map) {

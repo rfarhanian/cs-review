@@ -13,7 +13,7 @@ import java.util.List;
  * last line and some don't. And it is ok. The ones that reach the last row,
  * will eventually add themselves to the solution.
  * You should backtrack from your move so that the rest of the tree of the algorithm can choose
- * other cells. The backtracking happens after the recursion.
+ * other cells.
  * </p>
  * <p>
  * You will reach a solution when you finish the last subproblem(row=8)
@@ -105,6 +105,8 @@ public class EightQueen {
             j++;
         }
         return true;
+//the following approach doesn't work because the algorithm is checking the upper left and upper right of no just
+// this cell but all cells it visits.
 //        System.out.println("Diagonal check (" + row + "," + col + ")");
 //        if (!isInRange(row, col)) {
 //            return true;

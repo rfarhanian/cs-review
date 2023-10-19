@@ -103,20 +103,6 @@ public class NQueen {
             j++;
         }
         return true;
-//        System.out.println("Diagonal check (" + row + "," + col + ")");
-//        if (!isInRange(row, col)) {
-//            return true;
-//        }
-//        Boolean currentCell = input[row][col];
-//
-//        boolean upRight = noDiagonalAttack(input, row - 1, col + 1);
-//        boolean upLeft = noDiagonalAttack(input, row - 1, col - 1);
-//        return currentCell == null && upRight && upLeft;
     }
-
-//    private boolean isInRange(int row, int col) {
-//        return row >= 0 && row < 8 && col >= 0 && col < 8;
-//    }
-
 
 }
