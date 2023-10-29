@@ -3,7 +3,7 @@ package com.mnaseri.cs.homework.ch12;
 public class Node {
     private Node left, right, parent;
     private int value;
-    private int size = 1;
+    private int leftSize = 0;
 
     public Node(int value) {
         this.value = value;
@@ -41,27 +41,19 @@ public class Node {
         this.value = value;
     }
 
-    public int getSize() {
-        return size;
+    public int getLeftSize() {
+        return leftSize;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void incrementSize() {
-        this.size++;
-    }
-
-    public void decrementSize() {
-        this.size--;
+    public void incrementLeftSize() {
+        this.leftSize++;
     }
 
     @Override
     public String toString() {
         return "Node{" +
                 "value:" + value +
-                ", size:" + size +
+                ", size:" + leftSize +
                 ", left:" + left +
                 ", right:" + right +
                 '}';

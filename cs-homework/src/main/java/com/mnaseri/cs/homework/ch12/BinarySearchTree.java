@@ -46,7 +46,7 @@ public class BinarySearchTree {
         List<Integer> items = Arrays.asList(80, 90, 95, 100, 120, 150, 200);
 
         for (int item : items) {
-            System.out.println("bst.size(" + item + ") = " + bst.find(item).getSize());
+            System.out.println("bst.size(" + item + ") = " + bst.find(item).getLeftSize());
         }
         for (int item : items) {
             System.out.println("bst.rank(" + item + ") = " + bst.rank(item));
@@ -134,34 +134,15 @@ public class BinarySearchTree {
     }
 
     public boolean isBst(Node node) {
-        return isBst(node, Integer.MIN_VALUE, Integer.MAX_VALUE);
-//        return isBst(root, null, null);
+        return isBst(node, null, null);
     }
 
-    private boolean isBst(Node node, Node min, Node max) {
-        if (node == null) {
-            return true;
-        }
-        if (min != null && node.getValue() <= min.getValue()) {
-            return false;
-        }
-        if (max != null && node.getValue() >= max.getValue()) {
-            return false;
-        }
-        return isBst(node.getLeft(), min, node) && isBst(node.getRight(), node, max);
-    }
-
-    private boolean isBst(Node node, int min, int max) {
-        if (node == null) {
-            return true;
-        }
-        if (node.getValue() <= min) {
-            return false;
-        }
-        if (node.getValue() >= max) {
-            return false;
-        }
-        return isBst(node.getLeft(), min, node.getValue()) && isBst(node.getRight(), node.getValue(), max);
+    private boolean isBst(Node root, Integer min, Integer max) {
+        boolean smallerThanMax = (max != null) ? (root.getValue() < max) : true;
+        boolean largerThanMin = (min != null) ? (root.getValue() > min) : true;
+        return smallerThanMax && largerThanMin &&
+                isBst(root.getLeft(), min, root.getValue()) &&
+                isBst(root.getRight(), root.getValue(), max);
     }
 
     public void insert(int value) {
@@ -191,8 +172,8 @@ public class BinarySearchTree {
     }
 
     private void insert(Node root, int value) {
-        root.incrementSize();
         if (value < root.getValue()) {
+            root.incrementLeftSize();
             if (root.getLeft() != null) {
                 insert(root.getLeft(), value);
             } else {
@@ -276,7 +257,7 @@ public class BinarySearchTree {
      * @throws IllegalArgumentException unless {@code rank} is between 0 and <em>n</em>–1
      */
     public Integer select(int rank) {
-        if (rank < 0 || rank > root.getSize()) {
+        if (rank < 0 || rank > root.getLeftSize()) {
             throw new IllegalArgumentException("argument to select() is invalid: " + rank);
         }
         return select(root, rank);
@@ -286,7 +267,7 @@ public class BinarySearchTree {
         if (node == null) {
             return 0;
         }
-        int current = (node.getLeft() != null ? node.getLeft().getSize() : 0) + 1;
+        int current = (node.getLeft() != null ? node.getLeft().getLeftSize() : 0) + 1;
         if (rank == current) {
             return node.getValue();
         }
@@ -313,7 +294,7 @@ public class BinarySearchTree {
         }
 
         if (targetValue == node.getValue()) {
-            return (node.getLeft() == null ? 0 : node.getLeft().getSize()) + 1;
+            return node.getLeftSize() + 1;
         } else if (targetValue < node.getValue()) {
             return rank(node.getLeft(), targetValue);
         } else {
@@ -321,8 +302,7 @@ public class BinarySearchTree {
             if (rightRank == -1) {
                 return -1;
             } else {
-                int leftSize = node.getLeft() == null ? 0 : node.getLeft().getSize();
-                return leftSize + 1 + rightRank;
+                return node.getLeftSize() + 1 + rightRank;
             }
         }
     }

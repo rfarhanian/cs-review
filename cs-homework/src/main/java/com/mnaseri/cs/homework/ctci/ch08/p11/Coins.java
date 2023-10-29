@@ -16,15 +16,15 @@ public class Coins {
     public static void main(String[] args) {
         Coins coins = new Coins();
         for (int i = 1; i < 1000; i++) {
-            System.out.println("coins.findPermutations(" + i + ") = " + coins.findPermutations(i));
+            System.out.println("coins.findPermutations(" + i + ") = " + coins.findWays(i));
         }
     }
 
-    public int findPermutations(int n) {
-        return findPermutations(n, QUARTER);
+    public int findWays(int n) {
+        return findWays(n, QUARTER);
     }
 
-    public int findPermutations(int n, COIN_TYPE type) {
+    public int findWays(int n, COIN_TYPE type) {
 
         if (n == 1 || type == CENT) {
             return 1;
@@ -34,7 +34,7 @@ public class Coins {
         for (int i = 0; i <= maxNumberOfCoin; i++) {
             int remainder = n - (i * type.getValue());
             COIN_TYPE nextCoin = type.getNext();
-            totalWays += findPermutations(remainder, nextCoin);
+            totalWays += findWays(remainder, nextCoin);
         }
         return totalWays;
     }
