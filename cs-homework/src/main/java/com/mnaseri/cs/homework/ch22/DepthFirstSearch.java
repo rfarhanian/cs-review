@@ -1,12 +1,31 @@
 package com.mnaseri.cs.homework.ch22;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DepthFirstSearch {
 
+    private Map<Integer, State> visited = new HashMap<>();
+
     private Graph graph;
-    private List<Integer> visited = new ArrayList<>();
+
+    public void search(GraphVisitor visitor) {
+        visited.clear();
+        if (!graph.isEmpty()) {
+            List<Integer> vertices = graph.getVertices();
+
+            for (Integer node : vertices) {
+                visited.put(node, State.BLANK);
+            }
+
+            for (Integer node : vertices) {
+                if (visited.get(node) == State.BLANK) {
+                    search(node, visitor);
+                }
+            }
+        }
+    }
 
     public DepthFirstSearch(Graph graph) {
         this.graph = graph;
@@ -33,26 +52,20 @@ public class DepthFirstSearch {
         });
     }
 
-    public void search(GraphVisitor visitor) {
-        visited.clear();
-        if (!graph.isEmpty()) {
-            List<Integer> vertices = graph.getVertices();
-            for (Integer node : vertices) {
-                search(node, visitor);
-            }
-        }
-    }
-
     private void search(Integer vertex, GraphVisitor visitor) {
-        if (visited.contains(vertex)) {
-            return;
+        if (visited.get(vertex) == State.PARTIAL) {
+            return;  // Cycle
         }
-        visited.add(vertex);
-        List<Integer> neighbors = graph.getNeighbors(vertex);
-        for (Integer neighbor : neighbors) {
-            search(neighbor, visitor);
+        if (visited.get(vertex) == State.BLANK) {
+            visited.put(vertex, State.PARTIAL);
+            List<Integer> neighbors = graph.getNeighbors(vertex);
+            for (Integer neighbor : neighbors) {
+                search(neighbor, visitor);
+            }
+            visitor.visit(vertex);
+            visited.put(vertex, State.COMPLETE);
         }
-        visitor.visit(vertex);
-
     }
+
+    private enum State {BLANK, PARTIAL, COMPLETE}
 }

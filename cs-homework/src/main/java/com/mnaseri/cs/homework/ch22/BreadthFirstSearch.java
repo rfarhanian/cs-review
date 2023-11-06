@@ -1,17 +1,29 @@
 package com.mnaseri.cs.homework.ch22;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class BreadthFirstSearch {
 
+    private Map<Integer, State> visited = new HashMap<>();
+
     private Graph graph;
-    private List<Integer> visited = new ArrayList<>();
+
+    public void search(GraphVisitor visitor) {
+
+        if (!graph.isEmpty()) {
+            List<Integer> vertices = graph.getVertices();
+            for (Integer element : vertices) {
+                visited.put(element, State.BLANK);
+            }
+            for (Integer element : vertices) {
+                if (visited.get(element) == State.BLANK) {
+                    search(visitor, element);
+                }
+            }
+        }
+    }
 
     public BreadthFirstSearch(Graph graph) {
-
         this.graph = graph;
     }
 
@@ -36,33 +48,24 @@ public class BreadthFirstSearch {
         });
     }
 
-    public void search(GraphVisitor visitor) {
-        visited.clear();
-        if (!graph.isEmpty()) {
-            List<Integer> vertices = graph.getVertices();
-            for (Integer element : vertices) {
-                search(visitor, element);
-            }
-        }
-    }
-
     private void search(GraphVisitor visitor, Integer element) {
-        if (visited.contains(element)) {
-            return;
-        }
         Queue<Integer> queue = new LinkedList<>();
         queue.add(element);
+        visited.put(element, State.PARTIAL);
         while (!queue.isEmpty()) {
             Integer vertex = queue.poll();
             visitor.visit(vertex);
-            visited.add(vertex);
             List<Integer> neighbors = graph.getNeighbors(vertex);
             for (Integer neighbor : neighbors) {
-                if (!visited.contains(neighbor)) {
+                if (visited.get(neighbor) == State.BLANK) {
+                    visited.put(neighbor, State.PARTIAL);
                     queue.add(neighbor);
                 }
             }
+            visited.put(vertex, State.COMPLETE);
         }
     }
+
+    private enum State {BLANK, PARTIAL, COMPLETE}
 
 }

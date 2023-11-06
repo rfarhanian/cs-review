@@ -32,13 +32,13 @@ public class DagSingleSourceShortestPathFinder<E extends WeightedEdgeDetails, V 
         }
         result.get(start).setProperty("distance", 0);
         TopologicalSorter topologicalSorter = new DFSTopologicalSorter();
-        List<Integer> sorted = topologicalSorter.sort(graph);
+        List<Integer> sorted = topologicalSorter.sort(result);
         for (Integer node : sorted) {
-            Vertex<V> current = graph.get(node);
+            Vertex<V> current = result.get(node);
             Integer currentDistance = current.getProperty("distance", Integer.class);
             List<Vertex<V>> neighbors = graph.getNeighbors(current.getIndex());
             for (Vertex<V> neighbor : neighbors) {
-                Edge<E, V> edge = graph.edge(current.getIndex(), neighbor.getIndex());
+                Edge<E, V> edge = result.edge(current.getIndex(), neighbor.getIndex());
                 int weight = weight(edge);
                 int suggestedDistance = weight + currentDistance;
                 Integer actualDistance = neighbor.getProperty("distance", Integer.class);

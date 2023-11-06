@@ -21,13 +21,13 @@ public class BellmanFordSingleSourceShortestPathFinder<E extends WeightedEdgeDet
         AdjacencyListGraph<E, V> result = initialize(graph, start, vertices);
 
         for (Vertex<V> vertex : vertices) {
-            List<Edge<E, V>> edges = graph.getEdges();
+            List<Edge<E, V>> edges = result.getEdges();
             for (Edge<E, V> edge : edges) {
-                relax(graph, edge.getFrom(), edge.getTo());
+                relax(result, edge.getFrom(), edge.getTo());
             }
         }
 
-        for (Edge<E, V> edge : graph.getEdges()) {
+        for (Edge<E, V> edge : result.getEdges()) {
             Vertex<V> from = edge.getFrom();
             Vertex<V> to = edge.getTo();
             int currentDistance = from.getProperty("distance", Integer.class);
