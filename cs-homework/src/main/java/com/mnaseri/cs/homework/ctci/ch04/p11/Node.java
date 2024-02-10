@@ -1,7 +1,7 @@
 package com.mnaseri.cs.homework.ctci.ch04.p11;
 
 public class Node {
-    private int value, size;
+    private int value, leftSize;
     private Node left, right;
 
     public Node(int value) {
@@ -28,15 +28,15 @@ public class Node {
         return value;
     }
 
-    public int getSize() {
-        return size;
+    public int getLeftSize() {
+        return leftSize;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setLeftSize(int leftSize) {
+        this.leftSize = leftSize;
     }
 
-    public void incrementSize() {
-        this.size++;
+    public void incrementLeftSize() {
+        this.leftSize++;
     }
 }

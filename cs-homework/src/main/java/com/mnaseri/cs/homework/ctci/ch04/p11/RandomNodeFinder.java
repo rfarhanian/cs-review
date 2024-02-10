@@ -19,8 +19,8 @@ public class RandomNodeFinder {
     }
 
     private void insert(Node node, int value) {
-        node.incrementSize();
         if (value < node.getValue()) {
+            node.incrementLeftSize();
             Node left = node.getLeft();
             if (left != null) {
                 insert(left, value);
@@ -66,7 +66,7 @@ public class RandomNodeFinder {
         if (root == null) {
             return null;
         }
-        int rank = RANDOM.nextInt(root.getSize() + 1);
+        int rank = RANDOM.nextInt(root.getLeftSize() + 1);
         return select(root, rank);
     }
 
@@ -74,7 +74,7 @@ public class RandomNodeFinder {
         if (node == null) {
             return null;
         }
-        int current = (node.getLeft() != null ? node.getLeft().getSize() : 0) + 1;
+        int current = (node.getLeft() != null ? node.getLeft().getLeftSize() : 0) + 1;
         if (rank == current) {
             return node;
         }

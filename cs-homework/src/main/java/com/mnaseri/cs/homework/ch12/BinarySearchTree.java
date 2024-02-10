@@ -255,9 +255,10 @@ public class BinarySearchTree {
      * @param rank the order statistic
      * @return the value with given {@code rank}
      * @throws IllegalArgumentException unless {@code rank} is between 0 and <em>n</em>–1
+     * @see <a href="https://algs4.cs.princeton.edu/32bst/BST.java.html">Check Sedgewick implementation for rank > size() check</a>
      */
     public Integer select(int rank) {
-        if (rank < 0 || rank > root.getLeftSize()) {
+        if (rank < 0 /*|| rank > size()*/) {
             throw new IllegalArgumentException("argument to select() is invalid: " + rank);
         }
         return select(root, rank);

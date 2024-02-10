@@ -33,6 +33,7 @@
         <module>../cs-skiena</module>
         <module>../cs-ctci</module>
         <module>../cs-homework</module>
+        <module>../cs-gcipij</module>
     </modules>
 
     <properties>
