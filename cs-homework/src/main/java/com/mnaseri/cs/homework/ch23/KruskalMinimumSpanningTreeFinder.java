@@ -5,7 +5,10 @@ import com.mnaseri.cs.homework.ch21.Item;
 import com.mnaseri.cs.homework.ch22.Edge;
 import com.mnaseri.cs.homework.ch22.Graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The notability notes : Chapter 23 explains the problem very well.
@@ -18,7 +21,7 @@ public class KruskalMinimumSpanningTreeFinder {
     public BasicDisjointSet find(Graph graph) {
         BasicDisjointSet disjointSet = new BasicDisjointSet();
         List<Edge> edges = resolveEdges(graph);
-        edges.sort(new KruskalComparator());
+        edges.sort((a, b) -> a.getValue() - b.getValue());
         Map<Integer, Item> map = new HashMap<>();
         for (Integer vertex : graph.getVertices()) {
             Item item = disjointSet.create(vertex);
@@ -51,12 +54,12 @@ public class KruskalMinimumSpanningTreeFinder {
         return result;
     }
 
-    private static class KruskalComparator implements Comparator<Edge> {
-
-        public int compare(Edge first, Edge second) {
-            return Integer.compare(first.getValue(), second.getValue());
-        }
-    }
+//    private static class KruskalComparator implements Comparator<Edge> {
+//
+//        public int compare(Edge first, Edge second) {
+//            return Integer.compare(first.getValue(), second.getValue());
+//        }
+//    }
 
 
 }

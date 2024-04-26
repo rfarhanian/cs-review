@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Bellman-Ford is the shortest path algorithm without any restriction.
+ * At first, we iterate v-1 times on each node and relax every path. If we can relax any path again, it indicates
+ * that there is a negative cycle which means that the problem has no answer.
  * Bellman-Ford algorithm detects negative cycles and graphs with negative cycles have no shortest path.
  *
  * @param <E>
@@ -20,7 +22,7 @@ public class BellmanFordSingleSourceShortestPathFinder<E extends WeightedEdgeDet
         List<Vertex<V>> vertices = graph.getVertices();
         AdjacencyListGraph<E, V> result = initialize(graph, start, vertices);
 
-        for (Vertex<V> vertex : vertices) {
+        for (int i = 0; i < vertices.size() - 1; i++) {
             List<Edge<E, V>> edges = result.getEdges();
             for (Edge<E, V> edge : edges) {
                 relax(result, edge.getFrom(), edge.getTo());

@@ -11,7 +11,12 @@ import java.util.PriorityQueue;
  * Djikstra's shortest path algorithm (Time Complexity: Vlog(V) + E
  * Vlog(V) is for priority queue sorting work.
  * E is apparently for visiting all the neighbors.
- * The main limitation of Dijkstra’s algorithm is that it can't give proper result for the graphs having negative weighed edges.
+ * The main limitation of Dijkstra’s algorithm is that it can't give proper result for the graphs having negative
+ * weighed edges.
+ *  * 1- We create a copy of the graph with infinite distance for all edges except for zero for starting point.
+ *  * 2- Then we add all the nodes of the copied graph into a priority queue (with a comparator sorting by distance increasingly).
+ *  * 3- We relax all edges of the original graph and apply the result in the copied graph.
+ *  * 4- And finally we will return the result.
  *
  * @param <E>
  * @param <V>
@@ -50,7 +55,7 @@ public class DijkstraSingleSourceShortestPathFinder<E extends WeightedEdgeDetail
         while (!pq.isEmpty()) {
             Vertex<V> current = pq.poll();
 
-            for (Vertex<V> neighbor : graph.getNeighbors(current)) {
+            for (Vertex<V> neighbor : result.getNeighbors(current)) {
                 relax(graph, current, neighbor, pq);
             }
         }

@@ -8,8 +8,12 @@ import com.mmnaseri.cs.clrs.ch23.s1.WeightedEdgeDetails;
 import java.util.List;
 
 /**
- * The assumption is that the graph is a "Directed Acyclic Graph" so there will be no negative cycles although you can have negative edges.
- * Djikstra's assumption is that all nodes are non-negative.
+ * The assumption is that the graph is a "Directed Acyclic Graph" or a tree so there will be no negative cycles,
+ * although you can have negative edges. Djikstra's assumption is that all nodes are non-negative.
+ * 1- We create a copy of the graph with infinite distance for all edges except for zero for starting point.
+ * 2- Then we do a topological sort and iterate through all the sorted nodes one after another.
+ * 3- We relax all edges of the original graph.
+ * 4- And finally we will return the result.
  *
  * @param <E>
  * @param <V>
@@ -38,7 +42,7 @@ public class DagSingleSourceShortestPathFinder<E extends WeightedEdgeDetails, V 
             Integer currentDistance = current.getProperty("distance", Integer.class);
             List<Vertex<V>> neighbors = graph.getNeighbors(current.getIndex());
             for (Vertex<V> neighbor : neighbors) {
-                Edge<E, V> edge = result.edge(current.getIndex(), neighbor.getIndex());
+                Edge<E, V> edge = graph.edge(current.getIndex(), neighbor.getIndex());
                 int weight = weight(edge);
                 int suggestedDistance = weight + currentDistance;
                 Integer actualDistance = neighbor.getProperty("distance", Integer.class);

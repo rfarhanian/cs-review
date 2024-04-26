@@ -32,7 +32,10 @@ public class FindRepeatedSequences {
             System.out.println("i = " + i);
             if (i == 0) {
                 for (int j = 0; j < k; j++) {
-                    hashValue += list.get(j) * (int) Math.pow(a, k - j - 1); // You need to understand why in Rabin Karp we do a^k-j-1.
+                    // You need to understand why in Rabin Karp we do a^k-j-1.
+                    // For that matter, you need to learn "polynomial rolling hash" in <a href="https://www.educative.io/courses/grokking-coding-interview-patterns-java/solution-repeated-dna-sequences">the solution</a>.
+                    // @see <a href="https://www.educative.io/answers/what-is-the-rabin-karp-algorithm">Rabin Karp</a>
+                    hashValue += list.get(j) * (int) Math.pow(a, k - j - 1);
                 }
             } else {
                 int prev = hashValue;
