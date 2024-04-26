@@ -22,8 +22,10 @@ import java.util.*;
  * </p>
  *
  * @see <a href="https://www.educative.io/courses/grokking-coding-interview-patterns-java/alien-dictionary">The problem</a>
+ * @see <a href="https://www.youtube.com/watch?v=1QbsN5JyPto">Good explanation of the problem</a>
  * @see <a href="https://leetcode.com/problems/alien-dictionary/editorial/">Leetcode problem</a>
  * @see <a href="https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm">Kahn's topological sort algorithm</a>
+ * @see <a href="https://leetcodethehardway.com/tutorials/graph-theory/topological-sorting">More on Kahn's topological sort algorithm</a>
  */
 public class AlienDictionary {
     public static void main(String[] args) {
