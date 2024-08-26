@@ -39,27 +39,27 @@ public class MergeSort {
     }
 
     private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
-        int li = lo;
-        int ri = mid + 1; // right index is the index after mid
+        int left = lo; //left pointer
+        int right = mid + 1; // right pointer starts with the index after mid
 //        System.arraycopy(a, lo, aux, lo, (hi - lo + 1));
-        for (int k = lo; k <= hi; k++) {
-            aux[k] = a[k];
+        for (int cursor = lo; cursor <= hi; cursor++) {
+            aux[cursor] = a[cursor];
         }
 
         //aux is the source of truth
-        for (int k = lo; k <= hi; k++) {
-            if (li > mid) { //exhaustion condition on the left side
-                a[k] = aux[ri];
-                ri++;
-            } else if (ri > hi) {  //exhaustion condition on the right side
-                a[k] = aux[li];
-                li++;
-            } else if (aux[li] < aux[ri]) {
-                a[k] = aux[li];
-                li++;
+        for (int cursor = lo; cursor <= hi; cursor++) {
+            if (left > mid) { //exhaustion condition on the left side
+                a[cursor] = aux[right];
+                right++;
+            } else if (right > hi) {  //exhaustion condition on the right side
+                a[cursor] = aux[left];
+                left++;
+            } else if (aux[left] < aux[right]) {
+                a[cursor] = aux[left];
+                left++;
             } else {
-                a[k] = aux[ri];
-                ri++;
+                a[cursor] = aux[right];
+                right++;
             }
         }
     }
